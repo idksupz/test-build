@@ -123,7 +123,7 @@ class InventoryBase(DirectObject.DirectObject):
     def numItem(self, track, level):
         if type(track) == type(''):
             track = Tracks.index(track)
-        if track > len(Tracks) - 1 or level > len(Levels) - 1:
+        if track < 0 or track >= len(Tracks) or level < 0 or level >= len(Levels[track]):
             self.notify.warning("%s is using a gag that doesn't exist %s %s!" % (self.toon.doId, track, level))
             return -1
         return self.inventory[track][level]
@@ -167,7 +167,7 @@ class InventoryBase(DirectObject.DirectObject):
     def getTrackAndLevel(self, propName):
         for track in range(0, len(Tracks)):
             if AvProps[track].count(propName):
-                return (tracks, AvProps[track].index(propName))
+                return (track, AvProps[track].index(propName))
 
         return (-1, -1)
 
@@ -195,7 +195,7 @@ class InventoryBase(DirectObject.DirectObject):
         self.calcTotalProps()
         return None
 
-    def validateItemsBasedOnExp(self, newInventory, allowUber = 0):
+    def validateItemsBasedOnExp(self, newInventory):
         if type(newInventory) == type('String'):
             tempInv = self.makeFromNetString(newInventory)
         else:
@@ -286,7 +286,7 @@ class InventoryBase(DirectObject.DirectObject):
 
     def NPCMaxOutInv(self, targetTrack = -1):
         result = 0
-        for level in range(5, -1, -1):
+        for level in range(len(Levels[0]) - 1, -1, -1):
             anySpotsAvailable = 1
             while anySpotsAvailable == 1:
                 anySpotsAvailable = 0
@@ -309,15 +309,10 @@ class InventoryBase(DirectObject.DirectObject):
         self.calcTotalProps()
         return None
 
-    def zeroInv(self, killUber = 0):
+    def zeroInv(self):
         for track in range(len(Tracks)):
-            for level in range(UBER_GAG_LEVEL_INDEX):
+            for level in range(len(Levels[track])):
                 self.inventory[track][level] = 0
-
-            if killUber:
-                self.inventory[track][UBER_GAG_LEVEL_INDEX] = 0
-            if self.inventory[track][UBER_GAG_LEVEL_INDEX] > 1:
-                self.inventory[track][UBER_GAG_LEVEL_INDEX] = 1
 
         self.calcTotalProps()
         return None
