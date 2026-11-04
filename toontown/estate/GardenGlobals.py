@@ -298,13 +298,13 @@ if ACCELERATOR_USED_FROM_SHTIKER_BOOK:
     del PlantAttributes[202]
 
 def getTreeTrackAndLevel(typeIndex):
-    track = typeIndex // 7
-    level = typeIndex % 7
+    track = typeIndex // 8
+    level = typeIndex % 8
     return track, level
 
 
 def getTreeTypeIndex(track, level):
-    return track * 7 + level
+    return track * 8 + level
 
 
 NUM_GAGS = 9 * 8
