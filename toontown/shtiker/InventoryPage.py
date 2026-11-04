@@ -82,10 +82,9 @@ class InventoryPage(ShtikerPage.ShtikerPage):
             self.trackProgress['value'] = curExp
             if curExp >= ToontownBattleGlobals.MaxSkill:
                 str = TTLocalizer.InventoryPageTrackFull % trackName
-                trackText = TTLocalizer.InventoryUberTrackExp % {'nextExp': ToontownBattleGlobals.MaxSkill - curExp}
-                self.trackProgress['range'] = ToontownBattleGlobals.UberSkill
-                uberCurrExp = curExp - ToontownBattleGlobals.MaxSkill
-                self.trackProgress['value'] = uberCurrExp
+                trackText = '%s/%s' % (ToontownBattleGlobals.MaxSkill, ToontownBattleGlobals.MaxSkill)
+                self.trackProgress['range'] = ToontownBattleGlobals.MaxSkill
+                self.trackProgress['value'] = ToontownBattleGlobals.MaxSkill
             else:
                 morePoints = nextExp - curExp
                 if morePoints == 1:

@@ -283,11 +283,10 @@ class MaxToon(MagicWord):
     def handleWord(self, invoker, avId, toon, *args):
         missingTrack = args[0]
 
-        gagTracks = [1, 1, 1, 1, 1, 1, 1]
+        gagTracks = [1] * ToontownBattleGlobals.NUM_GAG_TRACKS
         if missingTrack != '':
             try:
-                index = ('toonup', 'trap', 'lure', 'sound', 'throw',
-                         'squirt', 'drop').index(missingTrack)
+                index = ToontownBattleGlobals.Tracks.index(missingTrack)
             except:
                 return 'Missing Gag track is invalid!'
             gagTracks[index] = 0
@@ -297,12 +296,11 @@ class MaxToon(MagicWord):
         experience = Experience.Experience(toon.getExperience(), toon)
         for i, track in enumerate(toon.getTrackAccess()):
             if track:
-                experience.experience[i] = (
-                        Experience.MaxSkill - Experience.UberSkill)
+                experience.experience[i] = ToontownBattleGlobals.MaxSkill
         toon.b_setExperience(experience.makeNetString())
 
         toon.inventory.zeroInv()
-        toon.inventory.maxOutInv(filterUberGags=0, filterPaidGags=0)
+        toon.inventory.maxOutInv(filterPaidGags=0)
         toon.b_setInventory(toon.inventory.makeNetString())
 
         toon.b_setMaxMoney(Quests.RewardDict[707][1])

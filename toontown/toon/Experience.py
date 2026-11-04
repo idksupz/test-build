@@ -112,13 +112,10 @@ class Experience:
     def getNextExpValue(self, track, curSkill = None):
         if curSkill == None:
             curSkill = self.experience[track]
-        retVal = Levels[track][len(Levels[track]) - 1]
         for amount in Levels[track]:
             if curSkill < amount:
-                retVal = amount
-                return retVal
-
-        return retVal
+                return amount
+        return MaxSkill
 
     def getNewGagIndexList(self, track, extraSkill):
         retList = []

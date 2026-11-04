@@ -432,18 +432,6 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         returnValue = BattleExperienceAI.getBattleExperience(4, self.activeToons, self.toonExp, self.battleCalc.toonSkillPtsGained, self.toonOrigQuests, self.toonItems, self.toonOrigMerits, self.toonMerits, self.toonParts, self.suitsKilled, self.helpfulToons)
         return returnValue
 
-    def getToonUberStatus(self):
-        fieldList = []
-        uberIndex = LAST_REGULAR_GAG_LEVEL + 1
-        for toon in self.activeToons:
-            toonList = []
-            for trackIndex in range(MAX_TRACK_INDEX):
-                toonList.append(toon.inventory.numItem(track, uberIndex))
-
-            fieldList.append(encodeUber(toonList))
-
-        return fieldList
-
     def addSuit(self, suit):
         self.notify.debug('addSuit(%d)' % suit.doId)
         self.newSuits.append(suit)

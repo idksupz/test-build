@@ -307,13 +307,10 @@ def getTreeTypeIndex(track, level):
     return track * 7 + level
 
 
-NUM_GAGS = 7 * 7
+NUM_GAGS = 9 * 8
 for i in range(NUM_GAGS):
     track, level = getTreeTrackAndLevel(i)
-    if level <= 6:
-        name = TTLocalizer.BattleGlobalAvPropStrings[track][level] + TTLocalizer.GardenGagTree
-    else:
-        name = TTLocalizer.GardenUberGag
+    name = TTLocalizer.BattleGlobalAvPropStrings[track][level] + TTLocalizer.GardenGagTree
     attr = {'name': name,
      'plantType': GAG_TREE_TYPE,
      'growthThresholds': (level + 1, (level + 1) * 2, (level + 1) * 3),

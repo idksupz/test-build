@@ -214,7 +214,7 @@ class DistributedGolfGreenGameAI(BattleBlockerAI.BattleBlockerAI, NodePath, Basi
     def addGag(self, avId):
         av = simbase.air.doId2do.get(avId)
         if av:
-            level = ToontownBattleGlobals.LAST_REGULAR_GAG_LEVEL
+            level = len(ToontownBattleGlobals.Levels[track] - 1)
             track = int(random.random() * ToontownBattleGlobals.NUM_GAG_TRACKS)
             while not av.hasTrackAccess(track):
                 track = int(random.random() * ToontownBattleGlobals.NUM_GAG_TRACKS)

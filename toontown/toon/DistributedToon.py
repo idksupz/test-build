@@ -345,11 +345,6 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         return
 
     def setExperience(self, experience):
-        print('*** EXPERIENCE DEBUG ***')
-        print('Received bytes:', len(experience))
-        print('Expected bytes:', 18)
-        print('Raw experience:', repr(experience))
-
         self.experience = Experience.Experience(experience, self)
         if self.inventory:
             self.inventory.updateGUI()

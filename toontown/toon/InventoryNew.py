@@ -96,7 +96,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
     def uberGagToggle(self):
         pass
 
-    def enableUberGags(self, enable):
+    def enableUberGags(self, enable=0):
         self.uberGagsEnabled = False
         return
 
@@ -712,7 +712,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                     if self.itemIsUsable(track, level):
                         button.show()
                         unpaid = not base.cr.isPaid()
-                        if self.numItem(track, level) >= self.getMax(track, level) or totalProps == maxProps or unpaid and gagIsPaidOnly(track, level) or level > LAST_REGULAR_GAG_LEVEL:
+                        if self.numItem(track, level) >= self.getMax(track, level) or totalProps >= maxProps or unpaid and gagIsPaidOnly(track, level):
                             if gagIsPaidOnly(track, level):
                                 self.makeDisabledPressable(button, track, level)
                             elif unpaid and gagIsVelvetRoped(track, level):
@@ -765,7 +765,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                     if self.itemIsUsable(track, level):
                         button.show()
                         unpaid = not base.cr.isPaid()
-                        if self.numItem(track, level) >= self.getMax(track, level) or totalProps == maxProps or unpaid and gagIsPaidOnly(track, level) or level > LAST_REGULAR_GAG_LEVEL:
+                        if self.numItem(track, level) >= self.getMax(track, level) or totalProps >= maxProps or unpaid and gagIsPaidOnly(track, level):
                             if gagIsPaidOnly(track, level):
                                 self.makeDisabledPressable(button, track, level)
                             elif unpaid and gagIsVelvetRoped(track, level):
@@ -1004,13 +1004,11 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
 
     def getCurAndNextExpValues(self, track):
         curSkill = self.toon.experience.getExp(track)
-        retVal = MaxSkill
         for amount in Levels[track]:
             if curSkill < amount:
-                retVal = amount
-                return (curSkill, retVal)
+                return (curSkill, amount)
 
-        return (curSkill, retVal)
+        return (curSkill, MaxSkill)
 
     def makePressable(self, button, track, level):
         organicBonus = self.toon.checkGagBonus(track, level)
@@ -1103,8 +1101,9 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
             self.trackBars[trackIndex]['range'] = nextExp
             self.trackBars[trackIndex]['text'] = TTLocalizer.InventoryGuestExp
         elif curExp >= MaxSkill:
-            self.trackBars[trackIndex]['range'] = UberSkill
-            self.trackBars[trackIndex]['text'] = TTLocalizer.InventoryUberTrackExp % {'nextExp': MaxSkill - curExp}
+            self.trackBars[trackIndex]['range'] = MaxSkill
+            self.trackBars[trackIndex]['value'] = MaxSkill
+            self.trackBars[trackIndex]['text'] = '%s/%s' % (MaxSkill, MaxSkill)
         else:
             self.trackBars[trackIndex]['range'] = nextExp
             self.trackBars[trackIndex]['text'] = TTLocalizer.InventoryTrackExp % {'curExp': curExp,
@@ -1142,8 +1141,9 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                     self.trackBars[track]['range'] = nextExp
                     self.trackBars[track]['text'] = TTLocalizer.InventoryGuestExp
                 elif curExp >= MaxSkill:
-                    self.trackBars[track]['text'] = TTLocalizer.InventoryUberTrackExp % {'nextExp': MaxSkill - curExp}
-                    self.trackBars[track]['value'] = curExp - MaxSkill
+                    self.trackBars[track]['range'] = MaxSkill
+                    self.trackBars[track]['value'] = MaxSkill
+                    self.trackBars[track]['text'] = '%s/%s' % (MaxSkill, MaxSkill)
                 else:
                     self.trackBars[track]['text'] = TTLocalizer.InventoryTrackExp % {'curExp': curExp,
                      'nextExp': nextExp}

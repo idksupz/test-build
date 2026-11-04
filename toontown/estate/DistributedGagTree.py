@@ -421,7 +421,7 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
         inventory = toon.inventory
         load = inventory.totalProps
         maxCarry = toon.getMaxCarry()
-        if load >= maxCarry and not self.gagLevel > ToontownBattleGlobals.LAST_REGULAR_GAG_LEVEL:
+        if load >= maxCarry:
             retval = False
         if inventory.numItem(self.gagTrack, self.gagLevel) >= inventory.getMax(self.gagTrack, self.gagLevel):
             retval = False
