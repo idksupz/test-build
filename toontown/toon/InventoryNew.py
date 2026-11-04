@@ -29,7 +29,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
     ShadowBuffedColor = Vec4(1, 1, 1, 1)
     UnpressableShadowBuffedColor = Vec4(1, 1, 1, 0.3)
     TrackYOffset = 0.0
-    TrackYSpacing = -0.12
+    TrackYSpacing = -0.075
     ButtonXOffset = -0.31
     ButtonXSpacing = 0.18
 
@@ -196,7 +196,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.trackBars = []
         self.buttons = []
         for track in range(0, len(Tracks)):
-            trackFrame = DirectFrame(parent=self.invFrame, image=self.rowModel, scale=(1.0, 1.0, 1.1), pos=(0, 0.3, self.TrackYOffset + track * self.TrackYSpacing), image_color=(TrackColors[track][0],
+            trackFrame = DirectFrame(parent=self.invFrame, image=self.rowModel, scale=(1.0, 1.0, 0.8), pos=(0, 0.3, self.TrackYOffset + track * self.TrackYSpacing), image_color=(TrackColors[track][0],
              TrackColors[track][1],
              TrackColors[track][2],
              1), state=DGG.NORMAL, relief=None)

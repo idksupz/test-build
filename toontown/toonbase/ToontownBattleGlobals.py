@@ -42,13 +42,7 @@ MIN_LEVEL_INDEX = 0
 MAX_LEVEL_INDEX = 7
 MAX_UNPAID_LEVEL_INDEX = 4
 NUM_GAG_TRACKS = 9
-AvLureRounds = (2,
- 2,
- 3,
- 3,
- 4,
- 4,
- 15)
+AvLureRounds = (2, 2, 3, 3, 4, 4, 5, 6)
 PropTypeToTrackBonus = {AnimPropTypes.Hydrant: SQUIRT_TRACK,
  AnimPropTypes.Mailbox: THROW_TRACK,
  AnimPropTypes.Trashcan: HEAL_TRACK}
