@@ -250,7 +250,7 @@ def __getWeddingCakeSoundTrack(level, hitSuit, node = None):
 
 
 def __getSoundTrack(level, hitSuit, node = None):
-    if level == UBER_GAG_LEVEL_INDEX:
+    if level == MAX_LEVEL_INDEX:
         return __getWeddingCakeSoundTrack(level, hitSuit, node)
     throwSound = globalBattleSoundCache.getSound('AA_pie_throw_only.ogg')
     throwTrack = Sequence(Wait(2.6), SoundInterval(throwSound, node=node))

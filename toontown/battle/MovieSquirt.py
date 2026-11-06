@@ -91,7 +91,7 @@ def __doSuitSquirts(squirts):
         fShowStun = 0
     for s in squirts:
         tracks = __doSquirt(s, delay, fShowStun, uberClone)
-        if s['level'] >= ToontownBattleGlobals.UBER_GAG_LEVEL_INDEX:
+        if s['level'] >= ToontownBattleGlobals.MAX_LEVEL_INDEX:
             uberClone = 1
         if tracks:
             for track in tracks:

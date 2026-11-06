@@ -65,7 +65,7 @@ def __getSuitTrack(sound, lastSoundThatHit, delay, hitCount, targets, totalDamag
     attacks = 0
     uberDelay = 0.0
     isUber = 0
-    if sound['level'] >= ToontownBattleGlobals.UBER_GAG_LEVEL_INDEX:
+    if sound['level'] >= ToontownBattleGlobals.MAX_LEVEL_INDEX:
         uberDelay = 3.0
         isUber = 1
     for target in targets:

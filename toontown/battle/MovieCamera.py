@@ -10,55 +10,36 @@ from . import MovieUtil
 notify = DirectNotifyGlobal.directNotify.newCategory('MovieCamera')
 
 def chooseHealShot(heals, attackDuration):
-    isUber = 0
-    for heal in heals:
-        if heal['level'] == 6 and not heal.get('petId'):
-            isUber = 1
-
-    if isUber:
-        print('is uber')
-        openShot = chooseHealOpenShot(heals, attackDuration, isUber)
-        openDuration = openShot.getDuration()
-        openName = openShot.getName()
-        closeShot = chooseHealCloseShot(heals, openDuration, openName, attackDuration * 3, isUber)
-        track = Sequence(closeShot)
-    else:
-        openShot = chooseHealOpenShot(heals, attackDuration, isUber)
-        openDuration = openShot.getDuration()
-        openName = openShot.getName()
-        closeShot = chooseHealCloseShot(heals, openDuration, openName, attackDuration, isUber)
-        track = Sequence(openShot, closeShot)
+    openShot = chooseHealOpenShot(heals, attackDuration)
+    openDuration = openShot.getDuration()
+    openName = openShot.getName()
+    closeShot = chooseHealCloseShot(heals, openDuration, openName, attackDuration)
+    track = Sequence(openShot, closeShot)
     return track
 
 
-def chooseHealOpenShot(heals, attackDuration, isUber = 0):
+def chooseHealOpenShot(heals, attackDuration):
     numHeals = len(heals)
     av = None
     duration = 2.8
-    if isUber:
-        duration = 5.0
     shotChoices = [toonGroupShot]
     track = random.choice(shotChoices)(*[av, duration])
     return track
 
 
-def chooseHealMidShot(heals, attackDuration, isUber = 0):
+def chooseHealMidShot(heals, attackDuration):
     numHeals = len(heals)
     av = None
     duration = 2.1
-    if isUber:
-        duration = 2.1
     shotChoices = [toonGroupHighShot]
     track = random.choice(shotChoices)(*[av, duration])
     return track
 
 
-def chooseHealCloseShot(heals, openDuration, openName, attackDuration, isUber = 0):
+def chooseHealCloseShot(heals, openDuration, openName, attackDuration):
     av = None
     duration = attackDuration - openDuration
     shotChoices = [toonGroupShot]
-    if isUber:
-        shotChoices = [allGroupLowShot]
     track = random.choice(shotChoices)(*[av, duration])
     return track
 
@@ -114,17 +95,7 @@ def chooseLureOpenShot(lures, attackDuration):
 def chooseLureCloseShot(lures, openDuration, openName, attackDuration):
     av = None
     duration = attackDuration - openDuration
-    hasTrainTrackTrap = False
-    battle = lures[0]['battle']
-    for suit in battle.suits:
-        if hasattr(suit, 'battleTrap') and suit.battleTrap == UBER_GAG_LEVEL_INDEX:
-            hasTrainTrackTrap = True
-
-    if hasTrainTrackTrap:
-        shotChoices = [avatarBehindHighRightShot]
-        av = lures[0]['toon']
-    else:
-        shotChoices = [allGroupLowShot]
+    shotChoices = [allGroupLowShot]
     track = random.choice(shotChoices)(*[av, duration])
     return track
 
@@ -142,20 +113,11 @@ def chooseSoundShot(sounds, targets, attackDuration, enterDuration = 0.0, exitDu
 
 def chooseSoundOpenShot(sounds, targets, attackDuration):
     duration = 3.1
-    isUber = 0
-    for sound in sounds:
-        if sound['level'] == 6:
-            isUber = 1
-            duration = 5.0
-
     numSounds = len(sounds)
     av = None
     if numSounds == 1:
         av = sounds[0]['toon']
-        if isUber:
-            shotChoices = [avatarCloseUpThreeQuarterRightShotWide, allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
-        else:
-            shotChoices = [avatarCloseUpThreeQuarterRightShot, allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
+        shotChoices = [avatarCloseUpThreeQuarterRightShot, allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     elif numSounds >= 2 and numSounds <= 4:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:

@@ -217,28 +217,15 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             frame = trap.getNumFrames(trapName) - 1
             trap.pose(trapName, frame)
 
-    def removeTrap(self, suit, removeTrainTrack = False):
-        self.notify.debug('removeTrap() from suit: %d, removeTrainTrack=%s' % (suit.doId, removeTrainTrack))
+    def removeTrap(self, suit):
+        self.notify.debug('removeTrap() from suit: %d' % suit.doId)
         if suit.battleTrapProp == None:
-            self.notify.debug('suit.battleTrapProp == None, suit.battleTrap=%s setting to NO_TRAP, returning' % suit.battleTrap)
+            self.notify.debug(
+                'suit.battleTrapProp == None, suit.battleTrap=%s setting to NO_TRAP, returning' % suit.battleTrap)
             suit.battleTrap = NO_TRAP
             return
-        if suit.battleTrap == UBER_GAG_LEVEL_INDEX:
-            if removeTrainTrack:
-                self.notify.debug('doing removeProp on traintrack')
-                MovieUtil.removeProp(suit.battleTrapProp)
-                for otherSuit in self.suits:
-                    if not otherSuit == suit:
-                        otherSuit.battleTrapProp = None
-                        self.notify.debug('351 otherSuit=%d otherSuit.battleTrapProp = None' % otherSuit.doId)
-                        otherSuit.battleTrap = NO_TRAP
-                        otherSuit.battleTrapIsFresh = 0
 
-            else:
-                self.notify.debug('deliberately not doing removeProp on traintrack')
-        else:
-            self.notify.debug('suit.battleTrap != UBER_GAG_LEVEL_INDEX')
-            MovieUtil.removeProp(suit.battleTrapProp)
+        MovieUtil.removeProp(suit.battleTrapProp)
         suit.battleTrapProp = None
         self.notify.debug('360 suit.battleTrapProp = None')
         suit.battleTrap = NO_TRAP

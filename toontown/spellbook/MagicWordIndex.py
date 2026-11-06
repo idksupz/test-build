@@ -2740,7 +2740,7 @@ class TrackBonus(MagicWord):
     def handleWord(self, invoker, avId, toon, *args):
         track = args[0]
 
-        trackLength = ToontownBattleGlobals.UBER_GAG_LEVEL_INDEX
+        trackLength = ToontownBattleGlobals.MAX_LEVEL_INDEX
         numTracks = ToontownBattleGlobals.NUM_GAG_TRACKS
         gagAccess = invoker.getTrackAccess()
 
