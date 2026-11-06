@@ -50,7 +50,6 @@ class BattleCalculatorAI:
         self.delayedUnlures = []
         self.__skillCreditMultiplier = 1
         self.tutorialFlag = tutorialFlag
-        self.trainTrapTriggered = False
 
     def setSkillCreditMultiplier(self, mult):
         self.__skillCreditMultiplier = mult
@@ -296,20 +295,6 @@ class BattleCalculatorAI:
         else:
             return 0
 
-    def addTrainTrapForJoiningSuit(self, suitId):
-        self.notify.debug('addTrainTrapForJoiningSuit suit=%d self.traps=%s' % (suitId, self.traps))
-        trapInfoToUse = None
-        for trapInfo in list(self.traps.values()):
-            if trapInfo[0] == UBER_GAG_LEVEL_INDEX:
-                trapInfoToUse = trapInfo
-                break
-
-        if trapInfoToUse:
-            self.traps[suitId] = trapInfoToUse
-        else:
-            self.notify.warning('huh we did not find a train trap?')
-        return
-
     def __addSuitGroupTrap(self, suitId, trapLvl, attackerId, allSuits, npcDamage=0):
         if npcDamage == 0:
             if suitId in self.traps:
@@ -395,7 +380,6 @@ class BattleCalculatorAI:
             return 0
 
     def __initTraps(self):
-        self.trainTrapTriggered = False
         keysList = list(self.traps.keys())
         for currTrap in keysList:
             if self.traps[currTrap][0] == self.TRAP_CONFLICT:
@@ -486,14 +470,7 @@ class BattleCalculatorAI:
                         if self.getSuitTrapType(targetId) != NO_TRAP:
                             self.__clearAttack(toonId)
                             return
-                    if atkLevel == UBER_GAG_LEVEL_INDEX:
-                        self.__addSuitGroupTrap(targetId, atkLevel, toonId, targetList, npcDamage)
-                        if self.__suitIsLured(targetId):
-                            self.notify.debug('Train Trap on lured suit %d, \n indicating with KBBONUS_COL flag' % targetId)
-                            tgtPos = self.battle.activeSuits.index(targetList[currTarget])
-                            attack[TOON_KBBONUS_COL][tgtPos] = self.KBBONUS_LURED_FLAG
-                    else:
-                        self.__addSuitTrap(targetId, atkLevel, toonId, npcDamage)
+                    self.__addSuitTrap(targetId, atkLevel, toonId, npcDamage)
                 elif self.__suitIsLured(targetId) and atkTrack == SOUND:
                     self.notify.debug('Sound on lured suit, ' + 'indicating with KBBONUS_COL flag')
                     tgtPos = self.battle.activeSuits.index(targetList[currTarget])
@@ -748,13 +725,7 @@ class BattleCalculatorAI:
         if trk != -1 and trk != NPCSOS and trk != PETSOS and lvl != -1 and id != -1:
             expList = self.toonSkillPtsGained.get(id, None)
             if expList == None:
-                expList = [0,
-                 0,
-                 0,
-                 0,
-                 0,
-                 0,
-                 0]
+                expList = [0] * NUM_GAG_TRACKS
                 self.toonSkillPtsGained[id] = expList
             expList[trk] = min(ExperienceCap, expList[trk] + (lvl + 1) * self.__skillCreditMultiplier)
         return
@@ -799,9 +770,9 @@ class BattleCalculatorAI:
 
     def __clearBonuses(self, hp=1):
         if hp:
-            self.hpBonuses = [{}, {}, {}, {}]
+            self.hpBonuses = [{} for _ in self.battle.suits]
         else:
-            self.kbBonuses = [{}, {}, {}, {}]
+            self.kbBonuses = [{} for _ in self.battle.suits]
 
     def __bonusExists(self, tgtSuit, hp=1):
         tgtPos = self.activeSuits.index(tgtSuit)
@@ -928,11 +899,6 @@ class BattleCalculatorAI:
                             toonId = lureInfo[0]
                             lureAtk = self.battle.toonAttacks[toonId]
                             tgtPos = self.battle.activeSuits.index(currTgt)
-                            if currTgt.doId in self.traps:
-                                trapInfo = self.traps[currTgt.doId]
-                                if trapInfo[0] == UBER_GAG_LEVEL_INDEX:
-                                    self.notify.debug('train trap triggered for %d' % currTgt.doId)
-                                    self.trainTrapTriggered = True
                             self.__removeSuitTrap(tgtId)
                             lureAtk[TOON_KBBONUS_COL][tgtPos] = self.KBBONUS_TGT_LURED
                             lureAtk[TOON_HP_COL][tgtPos] = lureInfo[3]
@@ -967,13 +933,6 @@ class BattleCalculatorAI:
                             self.__addAttackExp(attack)
                     else:
                         self.__addAttackExp(attack)
-
-        if self.trainTrapTriggered:
-            for suit in self.battle.activeSuits:
-                suitId = suit.doId
-                self.__removeSuitTrap(suitId)
-                suit.battleTrap = NO_TRAP
-                self.notify.debug('train trap triggered, removing trap from %d' % suitId)
 
         if self.notify.getDebug():
             for currToonAttack in self.toonAtkOrder:
@@ -1384,7 +1343,7 @@ class BattleCalculatorAI:
                 self.battle.toonAttacks[t][TOON_HP_COL].append(-1)
                 self.battle.toonAttacks[t][TOON_KBBONUS_COL].append(-1)
 
-        for i in range(4):
+        for i in range(len(self.battle.suitAttacks)):
             for j in range(len(self.battle.activeToons)):
                 self.battle.suitAttacks[i][SUIT_HP_COL].append(-1)
 

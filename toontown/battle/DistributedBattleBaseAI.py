@@ -1810,23 +1810,6 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         self.adjustingTimer.stop()
         return None
 
-    def __addTrainTrapForNewSuits(self):
-        hasTrainTrap = False
-        trapInfo = None
-        for otherSuit in self.activeSuits:
-            if otherSuit.battleTrap == UBER_GAG_LEVEL_INDEX:
-                hasTrainTrap = True
-
-        if hasTrainTrap:
-            for curSuit in self.activeSuits:
-                if not curSuit.battleTrap == UBER_GAG_LEVEL_INDEX:
-                    oldBattleTrap = curSuit.battleTrap
-                    curSuit.battleTrap = UBER_GAG_LEVEL_INDEX
-                    self.battleCalc.addTrainTrapForJoiningSuit(curSuit.doId)
-                    self.notify.debug('setting traintrack trap for joining suit %d oldTrap=%s' % (curSuit.doId, oldBattleTrap))
-
-        return
-
     def __adjustDone(self):
         for s in self.adjustingSuits:
             self.pendingSuits.remove(s)
@@ -1846,7 +1829,6 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
                 self.notify.warning('adjustDone() - toon: %d already active!' % toon.doId)
 
         self.adjustingToons = []
-        self.__addTrainTrapForNewSuits()
         self.d_setMembers()
         self.adjustFsm.request('NotAdjusting')
         if self.needAdjust == 1:
