@@ -1458,8 +1458,6 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
                             else:
                                 hp = hps[targetIndex]
                                 if hp > 0 and track == LURE:
-                                    if suit.battleTrap == UBER_GAG_LEVEL_INDEX:
-                                        pass
                                     suit.battleTrap = NO_TRAP
                                     needUpdate = 1
                                     if suit.doId in trapDict:
@@ -1498,20 +1496,12 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
                                         trapDict[targetId] = [attack]
                                 if hp > 0 and track == LURE:
                                     oldBattleTrap = target.battleTrap
-                                    if oldBattleTrap == UBER_GAG_LEVEL_INDEX:
-                                        pass
                                     target.battleTrap = NO_TRAP
                                     needUpdate = 1
                                     if target.doId in trapDict:
                                         del trapDict[target.doId]
                                     if suitsLuredOntoTraps.count(target) == 0:
                                         suitsLuredOntoTraps.append(target)
-                                    if oldBattleTrap == UBER_GAG_LEVEL_INDEX:
-                                        for otherSuit in self.activeSuits:
-                                            if not otherSuit == target:
-                                                otherSuit.battleTrap = NO_TRAP
-                                                if otherSuit.doId in trapDict:
-                                                    del trapDict[otherSuit.doId]
 
                                 died = attack[SUIT_DIED_COL] & 1 << targetIndex
                                 if died != 0:
@@ -1523,9 +1513,6 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
             attackList = trapDict[suitKey]
             attack = attackList[0]
             target = self.findSuit(attack[TOON_TGT_COL])
-            if attack[TOON_LVL_COL] == UBER_GAG_LEVEL_INDEX:
-                targetId = suitKey
-                target = self.findSuit(targetId)
             if len(attackList) == 1:
                 if suitsLuredOntoTraps.count(target) == 0:
                     self.notify.debug('movieDone() - trap set')
@@ -1537,12 +1524,6 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
                 self.notify.debug('movieDone() - traps collided')
                 if target != None:
                     target.battleTrap = NO_TRAP
-
-        if self.battleCalc.trainTrapTriggered:
-            self.notify.debug('Train trap triggered, clearing all traps')
-            for otherSuit in self.activeSuits:
-                self.notify.debug('suit =%d, oldBattleTrap=%d' % (otherSuit.doId, otherSuit.battleTrap))
-                otherSuit.battleTrap = NO_TRAP
 
         currLuredSuits = self.battleCalc.getLuredSuits()
         if len(self.luredSuits) == len(currLuredSuits):

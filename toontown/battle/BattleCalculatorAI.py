@@ -295,43 +295,6 @@ class BattleCalculatorAI:
         else:
             return 0
 
-    def __addSuitGroupTrap(self, suitId, trapLvl, attackerId, allSuits, npcDamage=0):
-        if npcDamage == 0:
-            if suitId in self.traps:
-                if self.traps[suitId][0] == self.TRAP_CONFLICT:
-                    pass
-                else:
-                    self.traps[suitId][0] = self.TRAP_CONFLICT
-                for suit in allSuits:
-                    id = suit.doId
-                    if id in self.traps:
-                        self.traps[id][0] = self.TRAP_CONFLICT
-                    else:
-                        self.traps[id] = [
-                         self.TRAP_CONFLICT, 0, 0]
-
-            else:
-                toon = self.battle.getToon(attackerId)
-                organicBonus = toon.checkGagBonus(TRAP, trapLvl)
-                propBonus = self.__checkPropBonus(TRAP)
-                damage = getAvPropDamage(TRAP, trapLvl, toon.experience.getExp(TRAP), organicBonus, propBonus, self.propAndOrganicBonusStack)
-                if self.itemIsCredit(TRAP, trapLvl):
-                    self.traps[suitId] = [
-                     trapLvl, attackerId, damage]
-                else:
-                    self.traps[suitId] = [trapLvl, 0, damage]
-                self.notify.debug('calling __addLuredSuitsDelayed')
-                self.__addLuredSuitsDelayed(attackerId, targetId=-1, ignoreDamageCheck=True)
-        else:
-            if suitId in self.traps:
-                if self.traps[suitId][0] == self.TRAP_CONFLICT:
-                    self.traps[suitId] = [
-                     trapLvl, 0, npcDamage]
-            else:
-                if not self.__suitIsLured(suitId):
-                    self.traps[suitId] = [
-                     trapLvl, 0, npcDamage]
-
     def __addSuitTrap(self, suitId, trapLvl, attackerId, npcDamage=0):
         if npcDamage == 0:
             if suitId in self.traps:
