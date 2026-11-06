@@ -92,13 +92,32 @@ pieNames = ['tart',
  'creampie-slice',
  'fruitpie',
  'creampie',
+ 'cheesecake',
  'birthday-cake',
  'wedding-cake',
  'lawbook']
-BASE_PROP_ROW = ['feather', 'bullhorn', 'lipstick', 'bamboocane', 'pixiedust', 'baton', 'baton', 'baton']
-AvProps = tuple(list(BASE_PROP_ROW) for _ in range(NUM_GAG_TRACKS))
-BASE_PROP_NEW_ROW = ['inventory_feather', 'inventory_megaphone', 'inventory_lipstick', 'inventory_bamboo_cane', 'inventory_pixiedust', 'inventory_juggling_cubes', 'inventory_ladder', 'inventory_ladder']
-AvPropsNew = tuple(list(BASE_PROP_NEW_ROW) for _ in range(NUM_GAG_TRACKS))
+AvProps = (
+    ['feather', 'megaphone', 'lipstick', 'bamboo', 'pixie', 'juggle', 'tickle', 'dive'],
+    ['banana', 'rake', 'mouse-trap', 'marbles', 'quicksand', 'trapdoor', 'portable-hole', 'tnt'],
+    ['1dollar', 'small-magnet', '5dollar', 'big-magnet', '10dollar', 'hypno', 'paycheck', 'presentation'],
+    ['tart', 'fruitpie-slice', 'creampie-slice', 'fruitpie', 'creampie', 'cheesecake', 'birthday-cake', 'wedding-cake'],
+    ['rubber-band', 'pingpong', 'slinky', 'superball', 'jackbox', 'moon-boots', 'pogo', 'trampoline'],
+    ['matchstick', 'hot-sauce', 'candle', 'sparkler', 'marshmallow', 'pepper-spray', 'ghost-pepper', 'body-spray'],
+    ['squirt-flower', 'water-glass', 'squirtgun', 'balloon', 'seltzer', 'hose', 'cloud', 'geyser'],
+    ['bike-horn', 'recorder', 'whistle', 'bugle', 'aoogah', 'elephant', 'foghorn', 'opera'],
+    ['flower-pot', 'paint-can', 'sandbag', 'anvil', 'ton', 'safe', 'statue', 'piano']
+)
+AvPropsNew = (
+    ['inventory_feather', 'inventory_megaphone', 'inventory_lipstick', 'inventory_bamboo_cane', 'inventory_pixiedust', 'inventory_juggling_cubes', 'inventory_', 'inventory_ladder'],
+    ['inventory_bannana_peel', 'inventory_rake', 'inventory_', 'inventory_marbles', 'inventory_quicksand_icon', 'inventory_trapdoor', 'inventory_', 'inventory_tnt'],
+    ['inventory_1dollarbill', 'inventory_small_magnet', 'inventory_5dollarbill', 'inventory_big_magnet', 'inventory_10dollarbill', 'inventory_hypno_goggles', 'inventory_', 'inventory_screen'],
+    ['inventory_tart', 'inventory_fruit_pie_slice', 'inventory_cream_pie_slice', 'inventory_fruitpie', 'inventory_creampie', 'inventory_', 'inventory_cake', 'inventory_wedding'],
+    ['inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_'],
+    ['inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_'],
+    ['inventory_squirt_flower', 'inventory_glass_of_water', 'inventory_water_gun', 'inventory_', 'inventory_seltzer_bottle', 'inventory_firehose', 'inventory_storm_cloud', 'inventory_geyser'],
+    ['inventory_bikehorn', 'inventory_', 'inventory_whistle', 'inventory_bugle', 'inventory_aoogah', 'inventory_elephant', 'inventory_fog_horn', 'inventory_opera_singer'],
+    ['inventory_flower_pot', 'inventory_', 'inventory_sandbag', 'inventory_anvil', 'inventory_weight', 'inventory_safe_box', 'inventory_', 'inventory_piano']
+)
 AvPropStrings = TTLocalizer.BattleGlobalAvPropStrings
 AvPropStringsSingular = TTLocalizer.BattleGlobalAvPropStringsSingular
 AvPropStringsPlural = TTLocalizer.BattleGlobalAvPropStringsPlural
