@@ -13,8 +13,7 @@ class BattleCalculatorAI:
      0, 20, 40, 60]
     DamageBonuses = [
      0, 20, 20, 20]
-    AttackExpPerTrack = [
-     0, 10, 20, 30, 40, 50, 60]
+    AttackExpPerTrack = [level * 10 for level in range(len(Levels[0]))]
     NumRoundsLured = AvLureRounds
     TRAP_CONFLICT = -2
     APPLY_HEALTH_ADJUSTMENTS = 1
