@@ -31,7 +31,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
     TrackYOffset = 0.15
     TrackYSpacing = -0.11
     ButtonXOffset = -0.31
-    ButtonXSpacing = 0.18
+    ButtonXSpacing = 0.18 * 6 / 7
 
     def __init__(self, toon, invStr = None, ShowSuperGags = 1):
         InventoryBase.InventoryBase.__init__(self, toon, invStr)
@@ -220,7 +220,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                 button = DirectButton(parent=self.trackRows[track], image=(self.upButton,
                  self.downButton,
                  self.rolloverButton,
-                 self.flatButton), geom=self.invModels[track][item], text='50', text_scale=0.04, text_align=TextNode.ARight, geom_scale=0.7, geom_pos=(-0.01, -0.1, 0), text_fg=Vec4(1, 1, 1, 1), text_pos=(0.07, -0.04), textMayChange=1, relief=None, image_color=(0, 0.6, 1, 1), pos=(self.ButtonXOffset + item * self.ButtonXSpacing + adjustLeft, -0.1, 0), command=self.__handleSelection, extraArgs=[track, item])
+                 self.flatButton), geom=self.invModels[track][item], text='50', text_scale=0.03, text_align=TextNode.ARight, geom_scale=0.65, geom_pos=(0, -0.1, 0), text_fg=Vec4(1, 1, 1, 1), text_pos=(0.063, -0.037), textMayChange=1, relief=None, image_color=(0, 0.6, 1, 1), image_scale=(0.88, 1.0, 1.0), pos=(self.ButtonXOffset + item * self.ButtonXSpacing + adjustLeft, -0.1, 0), command=self.__handleSelection, extraArgs=[track, item])
                 button.bind(DGG.ENTER, self.showDetail, extraArgs=[track, item])
                 button.bind(DGG.EXIT, self.hideDetail)
                 self.buttons[track].append(button)
@@ -878,7 +878,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.battleFrame.show()
         self.battleFrame.setScale(0.9)
         self.invFrame.reparentTo(self.battleFrame)
-        self.invFrame.setPos(-0.26, 0, 0.35)
+        self.invFrame.setPos(-0.26, 0, 0.25)
         self.invFrame.setScale(1)
         self.detailFrame.setPos(1.125, 0, -0.08)
         self.detailFrame.setScale(1)
