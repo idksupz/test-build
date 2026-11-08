@@ -386,6 +386,13 @@ def __trapRake(trap, trapProps, explode):
     return __createThrownTrapMultiTrack(trap, rakes, 'rake', anim=1, explode=explode)
 
 
+def __trapMouseTrap(trap, trapProps, explode):
+    toon = trap['toon']
+    suit = trap['target'][0]['suit']
+    notify.debug('toon: %s lays mouse trap in front of suit: %d' % (toon.getName(), suit.doId))
+
+
+
 def __trapMarbles(trap, trapProps, explode):
     toon = trap['toon']
     suit = trap['target'][0]['suit']
