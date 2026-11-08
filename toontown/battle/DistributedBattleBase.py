@@ -184,36 +184,63 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         return
 
     def loadTrap(self, suit, trapid):
-        self.notify.debug('loadTrap() trap: %d suit: %d' % (trapid, suit.doId))
+        self.notify.debug(
+            'loadTrap() trap: %d suit: %d' % (trapid, suit.doId)
+        )
+
         trapName = AvProps[TRAP][trapid]
-        trap = BattleProps.globalPropPool.getProp(trapName)
+
+        # Mouse Trap has no persistent model.
+        if trapName == 'mouse-trap':
+            suit.battleTrap = trapid
+            suit.battleTrapIsFresh = 0
+            suit.battleTrapProp = None
+            return
+
+        # Portable Hole uses the portal Actor rather than the prop pool.
+        if trapName == 'portable-hole':
+            trap = Actor.Actor(
+                'phase_3.5/models/props/portal-mod',
+                {'hole': 'phase_3.5/models/props/portal-chan'}
+            )
+        else:
+            trap = BattleProps.globalPropPool.getProp(trapName)
+
         suit.battleTrap = trapid
         suit.battleTrapIsFresh = 0
         suit.battleTrapProp = trap
-        self.notify.debug('suit.battleTrapProp = trap %s' % trap)
-        if trap.getName() == 'traintrack':
-            pass
-        else:
-            trap.wrtReparentTo(suit)
+
+        trap.wrtReparentTo(suit)
+
         distance = MovieUtil.SUIT_TRAP_DISTANCE
+
         if trapName == 'rake':
             distance = MovieUtil.SUIT_TRAP_RAKE_DISTANCE
             distance += MovieUtil.getSuitRakeOffset(suit)
             trap.setH(180)
             trap.setScale(0.7)
+
         elif trapName == 'trapdoor' or trapName == 'quicksand':
             trap.setScale(1.7)
+
         elif trapName == 'marbles':
             distance = MovieUtil.SUIT_TRAP_MARBLES_DISTANCE
             trap.setH(94)
+
         elif trapName == 'tnt':
             trap.setP(90)
             tip = trap.find('**/joint_attachEmitter')
             sparks = BattleParticles.createParticleEffect(file='tnt')
             trap.sparksEffect = sparks
             sparks.start(tip)
+
+        elif trapName == 'portable-hole':
+            trap.setScale(1.0)
+            trap.loop('hole')
+
         trap.setPos(0, distance, 0)
-        if isinstance(trap, Actor.Actor):
+
+        if isinstance(trap, Actor.Actor) and trapName != 'portable-hole':
             frame = trap.getNumFrames(trapName) - 1
             trap.pose(trapName, frame)
 
@@ -374,11 +401,6 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 numSuitsThatDied += 1
                 self.notify.debug('suit %d dies, numSuitsThatDied=%d' % (s.doId, numSuitsThatDied))
 
-        if numSuitsThatDied == 4:
-            trainTrap = self.find('**/traintrack')
-            if not trainTrap.isEmpty():
-                self.notify.debug('removing old train trap when 4 suits died')
-                trainTrap.removeNode()
         for s in suitsJoining:
             suit = self.suits[int(s)]
             if suit != None and self.joiningSuits.count(suit) == 0:
