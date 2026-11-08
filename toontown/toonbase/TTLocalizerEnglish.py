@@ -4991,11 +4991,6 @@ BattleGlobalAvPropStringsPlural = (
  ('Flower Pots', 'Paint Cans', 'Sandbags', 'Anvils', 'Big Weights', 'Safes', 'Toon Statues', 'Grand Pianos')
 )
 BattleGlobalAvTrackAccStrings = ('Perfect!', 'Perfect!', 'Varies', '75%', '95%', '80%', '95%', '95%', '60%')
-BattleGlobalLureAccLow = '50%'
-BattleGlobalLureAccLow2 = '60%'
-BattleGlobalLureAccMedium = '70%'
-BattleGlobalLureAccHigh = '95%'
-BattleGlobalLureTrackBonus = ' (+10%)'
 AttackMissed = 'MISSED'
 NPCCallButtonLabel = 'CALL'
 LoaderLabel = 'Loading...'

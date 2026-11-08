@@ -277,7 +277,7 @@ def __createThrownTrapMultiTrack(trap, propList, propName, propPos = None, propH
         elif trapName == 'mouse-trap':
             trapProp.setHpr(0, 0, 0)
             trapProp.setPos(0, MovieUtil.SUIT_TRAP_DISTANCE, 0)
-            trapProp.setScale(0.1)
+            trapProp.setScale(0.3)
         elif trapName == 'marbles':
             trapProp.setHpr(Point3(94, 0, 0))
             trapProp.setPos(0, MovieUtil.SUIT_TRAP_MARBLES_DISTANCE, 0)

@@ -367,6 +367,17 @@ def __createSuitDamageTrack(battle, suit, hp, lure, trapProp):
         damageTrack = Sequence(Wait(0.5), Func(suit.showHpText, -hp, openEnded=0), Func(suit.updateHealthBar, hp))
         soundTrack = getSoundTrack('TL_step_on_rake.ogg', delay=0.6, node=suit)
         result.append(Parallel(rakeTrack, suitTrack, damageTrack, soundTrack))
+    elif trapName == 'mouse-trap':
+        hpr = trapProp.getHpr(parent)
+        upHpr = Vec3(hpr[0], 179.9999, hpr[2])
+        bounce1Hpr = Vec3(hpr[0], 120, hpr[2])
+        bounce2Hpr = Vec3(hpr[0], 100, hpr[2])
+        rakeTrack = Sequence(Wait(0.5), LerpHprInterval(trapProp, 0.1, upHpr, startHpr=hpr), Wait(0.7), LerpHprInterval(trapProp, 0.4, hpr, startHpr=upHpr), LerpHprInterval(trapProp, 0.15, bounce1Hpr, startHpr=hpr), LerpHprInterval(trapProp, 0.05, hpr, startHpr=bounce1Hpr), LerpHprInterval(trapProp, 0.15, bounce2Hpr, startHpr=hpr), LerpHprInterval(trapProp, 0.05, hpr, startHpr=bounce2Hpr), Wait(0.2), LerpScaleInterval(trapProp, 0.2, Point3(0.01, 0.01, 0.01)))
+        rakeAnimDuration = 3.125
+        suitTrack = ActorInterval(suit, 'rake-react', duration=rakeAnimDuration)
+        damageTrack = Sequence(Wait(0.5), Func(suit.showHpText, -hp, openEnded=0), Func(suit.updateHealthBar, hp))
+        soundTrack = getSoundTrack('TL_step_on_rake.ogg', delay=0.6, node=suit)
+        result.append(Parallel(rakeTrack, suitTrack, damageTrack, soundTrack))
     elif trapName == 'marbles':
         slidePos = trapProp.getPos(parent)
         slidePos.setY(slidePos.getY() - 6.5)
@@ -420,7 +431,7 @@ def __createSuitDamageTrack(battle, suit, hp, lure, trapProp):
     else:
         notify.warning('unknown trapName: %s detected on suit: %s' % (trapName, suit))
     suit.battleTrapProp = trapProp
-    result.append(Func(battle.removeTrap, suit, True))
+    result.append(Func(battle.removeTrap, suit))
     result.append(Func(battle.unlureSuit, suit))
     result.append(__createSuitResetPosTrack(suit, battle))
     result.append(Func(suit.loop, 'neutral'))

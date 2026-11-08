@@ -219,7 +219,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         elif trapName == 'mouse-trap':
             distance = MovieUtil.SUIT_TRAP_DISTANCE
             trap.setHpr(0, 0, 0)
-            trap.setScale(1.0)
+            trap.setScale(0.3)
 
         elif trapName == 'marbles':
             distance = MovieUtil.SUIT_TRAP_MARBLES_DISTANCE
