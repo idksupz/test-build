@@ -405,7 +405,7 @@ def __trapMouseTrap(trap, trapProps, explode):
     suit = trap['target'][0]['suit']
     notify.debug('toon: %s lays mouse trap in front of suit: %d' % (toon.getName(), suit.doId))
     mouseTraps = trapProps
-    return __createThrownTrapMultiTrack(trap, mouseTraps, 'mouse', anim=1, explode=explode)
+    return __createThrownTrapMultiTrack(trap, mouseTraps, 'mouse', anim=0, explode=explode)
 
 
 def __trapMarbles(trap, trapProps, explode):

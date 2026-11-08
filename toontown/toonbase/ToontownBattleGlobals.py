@@ -108,15 +108,15 @@ AvProps = (
     ['flower-pot', 'paint-can', 'sandbag', 'anvil', 'ton', 'safe', 'statue', 'piano']
 )
 AvPropsNew = (
-    ['inventory_feather', 'inventory_megaphone', 'inventory_lipstick', 'inventory_bamboo_cane', 'inventory_pixiedust', 'inventory_juggling_cubes', 'inventory_', 'inventory_ladder'],
-    ['inventory_bannana_peel', 'inventory_rake', 'inventory_', 'inventory_marbles', 'inventory_quicksand_icon', 'inventory_trapdoor', 'inventory_', 'inventory_tnt'],
-    ['inventory_1dollarbill', 'inventory_small_magnet', 'inventory_5dollarbill', 'inventory_big_magnet', 'inventory_10dollarbill', 'inventory_hypno_goggles', 'inventory_', 'inventory_screen'],
-    ['inventory_tart', 'inventory_fruit_pie_slice', 'inventory_cream_pie_slice', 'inventory_fruitpie', 'inventory_creampie', 'inventory_', 'inventory_cake', 'inventory_wedding'],
-    ['inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_'],
-    ['inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_', 'inventory_'],
-    ['inventory_squirt_flower', 'inventory_glass_of_water', 'inventory_water_gun', 'inventory_', 'inventory_seltzer_bottle', 'inventory_firehose', 'inventory_storm_cloud', 'inventory_geyser'],
-    ['inventory_bikehorn', 'inventory_', 'inventory_whistle', 'inventory_bugle', 'inventory_aoogah', 'inventory_elephant', 'inventory_fog_horn', 'inventory_opera_singer'],
-    ['inventory_flower_pot', 'inventory_', 'inventory_sandbag', 'inventory_anvil', 'inventory_weight', 'inventory_safe_box', 'inventory_', 'inventory_piano']
+    ['inventory_feather', 'inventory_megaphone', 'inventory_lipstick', 'inventory_bamboo_cane', 'inventory_pixiedust', 'inventory_juggling_cubes', 'inventory_pixiedust', 'inventory_ladder'],
+    ['inventory_bannana_peel', 'inventory_rake', 'inventory_trapdoor', 'inventory_marbles', 'inventory_quicksand_icon', 'inventory_trapdoor', 'inventory_quicksand_icon', 'inventory_tnt'],
+    ['inventory_1dollarbill', 'inventory_small_magnet', 'inventory_5dollarbill', 'inventory_big_magnet', 'inventory_10dollarbill', 'inventory_hypno_goggles', 'inventory_10dollarbill', 'inventory_screen'],
+    ['inventory_tart', 'inventory_fruit_pie_slice', 'inventory_cream_pie_slice', 'inventory_fruitpie', 'inventory_creampie', 'inventory_creampie', 'inventory_cake', 'inventory_wedding'],
+    ['inventory_1dollarbill', 'inventory_small_magnet', 'inventory_5dollarbill', 'inventory_big_magnet', 'inventory_10dollarbill', 'inventory_hypno_goggles', 'inventory_10dollarbill', 'inventory_screen'],
+    ['inventory_1dollarbill', 'inventory_small_magnet', 'inventory_5dollarbill', 'inventory_big_magnet', 'inventory_10dollarbill', 'inventory_hypno_goggles', 'inventory_10dollarbill', 'inventory_screen'],
+    ['inventory_squirt_flower', 'inventory_glass_of_water', 'inventory_water_gun', 'inventory_seltzer_bottle', 'inventory_seltzer_bottle', 'inventory_firehose', 'inventory_storm_cloud', 'inventory_geyser'],
+    ['inventory_bikehorn', 'inventory_bugle', 'inventory_whistle', 'inventory_bugle', 'inventory_aoogah', 'inventory_elephant', 'inventory_fog_horn', 'inventory_opera_singer'],
+    ['inventory_flower_pot', 'inventory_sandbag', 'inventory_sandbag', 'inventory_anvil', 'inventory_weight', 'inventory_safe_box', 'inventory_safe_box', 'inventory_piano']
 )
 AvPropStrings = TTLocalizer.BattleGlobalAvPropStrings
 AvPropStringsSingular = TTLocalizer.BattleGlobalAvPropStringsSingular
