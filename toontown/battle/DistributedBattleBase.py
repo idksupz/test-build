@@ -190,13 +190,6 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
 
         trapName = AvProps[TRAP][trapid]
 
-        # Mouse Trap has no persistent model.
-        if trapName == 'mouse-trap':
-            suit.battleTrap = trapid
-            suit.battleTrapIsFresh = 0
-            suit.battleTrapProp = None
-            return
-
         # Portable Hole uses the portal Actor rather than the prop pool.
         if trapName == 'portable-hole':
             trap = Actor.Actor(
@@ -222,6 +215,11 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
 
         elif trapName == 'trapdoor' or trapName == 'quicksand':
             trap.setScale(1.7)
+
+        elif trapName == 'mouse-trap':
+            distance = MovieUtil.SUIT_TRAP_DISTANCE
+            trap.setHpr(0, 0, 0)
+            trap.setScale(1.0)
 
         elif trapName == 'marbles':
             distance = MovieUtil.SUIT_TRAP_MARBLES_DISTANCE

@@ -59,9 +59,9 @@ def doTraps(traps):
                 trapPropList.append([rake, rake2])
 
             elif level == 2:
-                mouseTrap = globalPropPool.getProp('mouse-trap')
-                mouseTrap2 = MovieUtil.copyProp(mouseTrap)
-                trapPropList.append([mouseTrap, mouseTrap2])
+                mouse-trap = globalPropPool.getProp('mouse-trap')
+                mouse-trap2 = MovieUtil.copyProp(mouseTrap)
+                trapPropList.append([mouse-trap, mouse-trap2])
 
             elif level == 3:
                 marbles = globalPropPool.getProp('marbles')
@@ -238,7 +238,7 @@ def __createThrownTrapMultiTrack(trap, propList, propName, propPos = None, propH
         soundTrack = getSoundTrack('TL_marbles.ogg', delay=0.1, node=toon)
         throwTrack.append(Wait(0.2))
         throwTrack.append(Parallel(moveTrack, animTrack, scaleTrack, soundTrack))
-    elif trapName in ('rake', 'mouse-trap'):
+    elif trapName == 'rake':
         trapPoint, trapHpr = battle.getActorPosHpr(suit)
         trapPoint.setY(MovieUtil.SUIT_TRAP_RAKE_DISTANCE)
         throwDuration = 1.1
@@ -248,6 +248,14 @@ def __createThrownTrapMultiTrack(trap, propList, propName, propPos = None, propH
         soundTrack = SoundInterval(globalBattleSoundCache.getSound('TL_rake_throw_only.ogg'), duration=1.1, node=suit)
         throwTrack.append(Wait(0.2))
         throwTrack.append(Parallel(throwingTrack, hprTrack, scaleTrack, soundTrack))
+    elif trapName == 'mouse-trap':
+        trapPoint, trapHpr = battle.getActorPosHpr(suit)
+        trapPoint.setY(MovieUtil.SUIT_TRAP_DISTANCE)
+        throwDuration = 1.1
+        throwingTrack = createThrowingTrack(thrownProp, trapPoint, duration=throwDuration, parent=suit)
+        scaleTrack = LerpScaleInterval(thrownProp, throwDuration, scale=MovieUtil.PNT3_ONE)
+        throwTrack.append(Wait(0.2))
+        throwTrack.append(Parallel(throwingTrack, scaleTrack))
     else:
         notify.warning('__createThrownTrapMultiTrack() - Incorrect trap:                          %s thrown from toon' % trapName)
 
@@ -266,6 +274,10 @@ def __createThrownTrapMultiTrack(trap, propList, propName, propPos = None, propH
             trapProp.setHpr(0, 0, 0)
             trapProp.setPos(0, MovieUtil.SUIT_TRAP_DISTANCE, -0.35)
             trapProp.pose(trapName, trapProp.getNumFrames(trapName) - 1)
+        elif trapName == 'mouse-trap':
+            trapProp.setHpr(0, 0, 0)
+            trapProp.setPos(0, MovieUtil.SUIT_TRAP_DISTANCE, 0)
+            trapProp.setScale(1.0)
         elif trapName == 'marbles':
             trapProp.setHpr(Point3(94, 0, 0))
             trapProp.setPos(0, MovieUtil.SUIT_TRAP_MARBLES_DISTANCE, 0)
@@ -392,7 +404,8 @@ def __trapMouseTrap(trap, trapProps, explode):
     toon = trap['toon']
     suit = trap['target'][0]['suit']
     notify.debug('toon: %s lays mouse trap in front of suit: %d' % (toon.getName(), suit.doId))
-
+    mouse-traps = trapProps
+    return __createThrownTrapMultiTrack(trap, mouse-traps, 'mouse', anim=1, explode=explode)
 
 
 def __trapMarbles(trap, trapProps, explode):
