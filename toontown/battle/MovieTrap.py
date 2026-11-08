@@ -59,9 +59,9 @@ def doTraps(traps):
                 trapPropList.append([rake, rake2])
 
             elif level == 2:
-                mouse-trap = globalPropPool.getProp('mouse-trap')
-                mouse-trap2 = MovieUtil.copyProp(mouseTrap)
-                trapPropList.append([mouse-trap, mouse-trap2])
+                mouseTrap = globalPropPool.getProp('mouse-trap')
+                mouseTrap2 = MovieUtil.copyProp(mouseTrap)
+                trapPropList.append([mouseTrap, mouseTrap2])
 
             elif level == 3:
                 marbles = globalPropPool.getProp('marbles')
@@ -404,8 +404,8 @@ def __trapMouseTrap(trap, trapProps, explode):
     toon = trap['toon']
     suit = trap['target'][0]['suit']
     notify.debug('toon: %s lays mouse trap in front of suit: %d' % (toon.getName(), suit.doId))
-    mouse-traps = trapProps
-    return __createThrownTrapMultiTrack(trap, mouse-traps, 'mouse', anim=1, explode=explode)
+    mouseTraps = trapProps
+    return __createThrownTrapMultiTrack(trap, mouseTraps, 'mouse', anim=1, explode=explode)
 
 
 def __trapMarbles(trap, trapProps, explode):
