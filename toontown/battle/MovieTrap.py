@@ -59,7 +59,9 @@ def doTraps(traps):
                 trapPropList.append([rake, rake2])
 
             elif level == 2:
-                trapPropList.append([None])
+                mouseTrap = globalPropPool.getProp('mouse-trap')
+                mouseTrap2 = MovieUtil.copyProp(mouseTrap)
+                trapPropList.append([mouseTrap, mouseTrap2])
 
             elif level == 3:
                 marbles = globalPropPool.getProp('marbles')
@@ -236,7 +238,7 @@ def __createThrownTrapMultiTrack(trap, propList, propName, propPos = None, propH
         soundTrack = getSoundTrack('TL_marbles.ogg', delay=0.1, node=toon)
         throwTrack.append(Wait(0.2))
         throwTrack.append(Parallel(moveTrack, animTrack, scaleTrack, soundTrack))
-    elif trapName == 'rake':
+    elif trapName in ('rake', 'mouse-trap'):
         trapPoint, trapHpr = battle.getActorPosHpr(suit)
         trapPoint.setY(MovieUtil.SUIT_TRAP_RAKE_DISTANCE)
         throwDuration = 1.1
